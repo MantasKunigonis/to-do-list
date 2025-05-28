@@ -15,7 +15,7 @@ while True:
         task = input("Enter a task: ")
 
         # Append file
-        with open("tasks.txt", "a") as file:
+        with open("tasks.txt", "a", encoding="utf-8") as file:
             file.write(task + "\n")
 
         # Notify success
@@ -26,7 +26,7 @@ while True:
         try:
 
             # Read file
-            with open("tasks.txt", "r") as file:
+            with open("tasks.txt", "r", encoding="utf-8") as file:
                 tasks = file.readlines()
 
             # Display tasks

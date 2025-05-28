@@ -6,3 +6,5 @@ task
 walk
 cook
 run
+eat cake
+test
