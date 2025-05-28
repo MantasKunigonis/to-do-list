@@ -15,13 +15,29 @@ def index():
         tasks = []
     return render_template("index.html", tasks=tasks)
 
-# Define the route for adding tasks ("/")
+# Define the route for adding tasks ("/add")
 @app.route("/add", methods=["POST"])
 def add():
     task = request.form.get("task")  # Get task from form
     if task:
         with open("tasks.txt", "a", encoding="utf-8") as file:
             file.write(task + "\n")
+    return redirect("/")
+
+# Define the rout for removing tasks ("/remove")
+@app.route("/remove/<int:task_id>", methods=["POST"])
+def remove(task_id):
+    try:
+        # Read tasks from file
+        with open("tasks.txt", "r", encoding="utf-8") as file:
+            tasks = file.readlines()
+        # Remove task
+        tasks.pop(task_id)
+        # Update tasks file
+        with open("tasks.txt", "w", encoding="utf-8") as file:
+            file.writelines(tasks)
+    except FileNotFoundError:
+        pass
     return redirect("/")
 
 # Runs the application only if this file is executed directly

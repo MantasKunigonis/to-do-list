@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>To-Do List</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
         <h1>Tasks</h1>
@@ -14,7 +15,13 @@
         <ul>
             <!-- Loop through and display tasks -->
             {% for task in tasks %}
-                <li>{{ task }}</li>
+                <li>
+                    {{ task }}
+                    <!-- Removal function for each task -->
+                    <form action="/remove/{{ loop.index0 }}" method="POST" style="display: inline">
+                        <button type="submit" onclick="return confirm('Are you sure you want to remove this task?')">Remove</button>
+                    </form>
+                </li>
             {% endfor %}
         </ul>
     </body>
