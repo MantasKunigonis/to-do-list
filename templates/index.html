@@ -16,6 +16,12 @@
             <!-- Loop through and display tasks -->
             {% for task in tasks %}
                 <li>
+                    <!-- Edit function for each task -->
+                    <form action="/edit/{{ loop.index0 }}" method="POST" style="display: inline">
+                        <input type="text" name="new_task" value="{{ task }}">
+                        <button type="submit">Save</button>
+                    </form>
+                    <!-- Display the task -->
                     {{ task }}
                     <!-- Removal function for each task -->
                     <form action="/remove/{{ loop.index0 }}" method="POST" style="display: inline">

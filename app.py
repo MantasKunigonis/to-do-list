@@ -24,7 +24,26 @@ def add():
             file.write(task + "\n")
     return redirect("/")
 
-# Define the rout for removing tasks ("/remove")
+# Define the route for editing tasks ("/edit")
+@app.route("/edit/<int:task_id>", methods=["POST"])
+def edit(task_id):
+    try:
+        # Retrieve edited task from form
+        new_task = request.form.get("new_task")
+        # Read tasks from file
+        with open("tasks.txt", "r", encoding="utf-8") as file:
+            tasks = file.readlines()
+        # Validate and replace
+        if 0 <= task_id < len(tasks) and new_task:
+            tasks[task_id] = new_task.strip() + "\n"
+        # Update tasks file
+        with open("tasks.txt", "w", encoding="utf-8") as file:
+            file.writelines(tasks)
+    except FileNotFoundError:
+        pass
+    return redirect("/")
+
+# Define the route for removing tasks ("/remove")
 @app.route("/remove/<int:task_id>", methods=["POST"])
 def remove(task_id):
     try:
