@@ -16,13 +16,15 @@
             <!-- Loop through and display tasks -->
             {% for task in tasks %}
                 <li>
-                    <!-- Edit function for each task -->
-                    <form action="/edit/{{ loop.index0 }}" method="POST" style="display: inline">
+                    <!-- Hidden edit form -->
+                    <form id="edit-form-{{ loop.index0 }}" action="/edit/{{ loop.index0 }}" method="POST" style="display: none;">
                         <input type="text" name="new_task" value="{{ task }}">
                         <button type="submit">Save</button>
                     </form>
+                    <!-- Edit button -->
+                    <button id="edit-button-{{ loop.index0 }}" onclick="toggleEdit({{ loop.index0 }}); toggleEditButton({{ loop.index0 }})">Edit</button>
                     <!-- Display the task -->
-                    {{ task }}
+                    <span id="task-{{ loop.index0 }}">{{ task }}</span>
                     <!-- Removal function for each task -->
                     <form action="/remove/{{ loop.index0 }}" method="POST" style="display: inline">
                         <button type="submit" onclick="return confirm('Are you sure you want to remove this task?')">Remove</button>
@@ -30,5 +32,14 @@
                 </li>
             {% endfor %}
         </ul>
+        <script>
+        function toggleEdit(id) {
+            document.getElementById('task-' + id).style.display = 'none';
+            document.getElementById('edit-form-' + id).style.display = 'inline';
+        }
+        function toggleEditButton(id) {
+            document.getElementById('edit-button-' + id).style.display = 'none';
+        }
+        </script>
     </body>
 </html>
